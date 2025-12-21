@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Fraud Detection | CodSoft</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>💳 Credit Card Fraud Detection</h1>
+            <p class="subtitle">Real-time Transaction Analysis System</p>
+            <p class="author">CodSoft ML Internship - Task 2 | Chandan Kumar</p>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Transaction Input Section -->
+            <div class="card input-card">
+                <h2>🔍 Analyze Transaction</h2>
+                <p class="instruction">Enter transaction details to check for potential fraud</p>
+
+                <div class="input-section">
+                    <!-- Transaction ID -->
+                    <div class="input-group">
+                        <label for="transactionId">
+                            <span class="label-icon">🔢</span>
+                            Transaction ID
+                        </label>
+                        <input type="text" id="transactionId" placeholder="TXN_123456789" value="TXN_123456789">
+                    </div>
+
+                    <!-- Amount -->
+                    <div class="input-group">
+                        <label for="amount">
+                            <span class="label-icon">💰</span>
+                            Transaction Amount ($)
+                        </label>
+                        <input type="number" id="amount" placeholder="100.00" value="150.50" step="0.01" min="0">
+                    </div>
+
+                    <!-- Time -->
+                    <div class="input-group">
+                        <label for="time">
+                            <span class="label-icon">⏱️</span>
+                            Time (seconds from first transaction)
+                        </label>
+                        <input type="number" id="time" placeholder="50000" value="50000" min="0">
+                    </div>
+
+                    <!-- Feature Selection -->
+                    <div class="feature-toggle">
+                        <button id="toggleFeatures" class="toggle-btn">
+                            <span id="toggleIcon">▶</span> Advanced Features (V1-V28)
+                        </button>
+                    </div>
+
+                    <!-- Advanced Features (Hidden by default) -->
+                    <div id="advancedFeatures" class="advanced-features hidden">
+                        <p class="info-text">
+                            ℹ️ These are PCA-transformed features. In production, these would be computed automatically.
+                            For demo purposes, you can use random values or the defaults.
+                        </p>
+                        
+                        <div class="features-grid">
+                            <!-- V1-V14 -->
+                            <div class="feature-col">
+                                <h4>Features V1-V14</h4>
+                                <div class="feature-inputs" id="features1"></div>
+                            </div>
+                            
+                            <!-- V15-V28 -->
+                            <div class="feature-col">
+                                <h4>Features V15-V28</h4>
+                                <div class="feature-inputs" id="features2"></div>
+                            </div>
+                        </div>
+
+                        <button id="randomizeFeatures" class="secondary-btn">
+                            🎲 Randomize Features
+                        </button>
+                    </div>
+
+                    <!-- Analyze Button -->
+                    <button id="analyzeBtn" class="primary-btn">
+                        🔍 Analyze Transaction
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Analyzing transaction patterns...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="results hidden">
+                <div class="card results-card">
+                    <h2>📊 Analysis Results</h2>
+                    
+                    <!-- Status Badge -->
+                    <div id="statusBadge" class="status-badge"></div>
+
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">🎯</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Fraud Probability</span>
+                                <span class="metric-value" id="probability">--</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">⚠️</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Risk Level</span>
+                                <span class="metric-value" id="riskLevel">--</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">💰</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Amount</span>
+                                <span class="metric-value" id="displayAmount">--</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">🔢</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Transaction ID</span>
+                                <span class="metric-value" id="displayId">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Probability Bar -->
+                    <div class="probability-section">
+                        <h3>Fraud Probability Analysis</h3>
+                        <div class="probability-bar">
+                            <div id="probabilityFill" class="probability-fill"></div>
+                            <div class="probability-markers">
+                                <span class="marker" style="left: 20%">20%</span>
+                                <span class="marker" style="left: 40%">40%</span>
+                                <span class="marker" style="left: 60%">60%</span>
+                                <span class="marker" style="left: 80%">80%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendation -->
+                    <div class="recommendation-section">
+                        <h3>💡 Recommended Action</h3>
+                        <div id="recommendation" class="recommendation-box"></div>
+                    </div>
+
+                    <!-- Transaction Details -->
+                    <div class="details-section">
+                        <button id="toggleDetails" class="toggle-details-btn">
+                            <span id="detailsIcon">▶</span> View Transaction Details
+                        </button>
+                        <div id="transactionDetails" class="transaction-details hidden"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Cards -->
+            <div class="info-section">
+                <div class="card info-card">
+                    <h3>📋 About This System</h3>
+                    <p>
+                        This fraud detection system uses machine learning to analyze credit card 
+                        transactions in real-time. It examines transaction patterns, amounts, 
+                        timing, and 28 PCA-transformed features to identify potentially fraudulent activity.
+                    </p>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Real-time fraud detection</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Advanced ML algorithms (SMOTE + Random Forest)</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Probability-based risk scoring</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Optimized for imbalanced data</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <h3>🎯 Risk Levels</h3>
+                    <div class="risk-levels">
+                        <div class="risk-item minimal">
+                            <span class="risk-label">MINIMAL</span>
+                            <span class="risk-range">0-20%</span>
+                        </div>
+                        <div class="risk-item low">
+                            <span class="risk-label">LOW</span>
+                            <span class="risk-range">20-40%</span>
+                        </div>
+                        <div class="risk-item medium">
+                            <span class="risk-label">MEDIUM</span>
+                            <span class="risk-range">40-60%</span>
+                        </div>
+                        <div class="risk-item high">
+                            <span class="risk-label">HIGH</span>
+                            <span class="risk-range">60-80%</span>
+                        </div>
+                        <div class="risk-item critical">
+                            <span class="risk-label">CRITICAL</span>
+                            <span class="risk-range">80-100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <h3>📊 Model Performance</h3>
+                    <div class="performance-stats">
+                        <div class="stat">
+                            <span class="stat-label">Precision</span>
+                            <span class="stat-value">92.3%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Recall</span>
+                            <span class="stat-value">88.7%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">F1-Score</span>
+                            <span class="stat-value">90.5%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">ROC-AUC</span>
+                            <span class="stat-value">0.9621</span>
+                        </div>
+                    </div>
+                    <p class="note">
+                        * Performance metrics from test dataset. Update with your actual results.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sample Transactions -->
+            <div class="card samples-card">
+                <h3>💡 Try Sample Transactions</h3>
+                <p>Click on any sample to load its data:</p>
+                <div class="samples-grid">
+                    <div class="sample-card" onclick="loadSample('legitimate')">
+                        <div class="sample-icon">✅</div>
+                        <h4>Legitimate Transaction</h4>
+                        <p>Normal shopping purchase</p>
+                        <span class="sample-amount">$45.99</span>
+                    </div>
+                    
+                    <div class="sample-card" onclick="loadSample('suspicious')">
+                        <div class="sample-icon">⚠️</div>
+                        <h4>Suspicious Transaction</h4>
+                        <p>Borderline case</p>
+                        <span class="sample-amount">$125.00</span>
+                    </div>
+                    
+                    <div class="sample-card" onclick="loadSample('fraud')">
+                        <div class="sample-icon">🚨</div>
+                        <h4>Fraudulent Transaction</h4>
+                        <p>High-risk pattern</p>
+                        <span class="sample-amount">$250.50</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <p>Made with ❤️ by Chandan Kumar | CodSoft ML Internship December 2025</p>
+                <div class="social-links">
+                    <a href="https://github.com/chandank013/CODSOFT" target="_blank">GitHub</a> |
+                    <a href="https://linkedin.com/in/chandan013" target="_blank">LinkedIn</a>
+                </div>
+                <p class="hashtags">#codsoft #frauddetection #machinelearning #internship</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

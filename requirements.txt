@@ -1,0 +1,132 @@
+# ============================================================
+# CODSOFT Machine Learning Internship – All Projects
+# Author: Chandan Kumar
+# Batch: December 2025 (B68)
+# Python Version: 3.11 (Recommended)
+# ============================================================
+
+
+# ============================================================
+# CORE DEPENDENCIES (Required for ALL tasks)
+# ============================================================
+
+numpy>=1.23.0
+pandas>=1.5.0
+scikit-learn>=1.2.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Jupyter Environment
+jupyter>=1.0.0
+notebook>=7.0.0
+ipykernel>=6.25.0
+ipywidgets>=8.0.0
+
+
+# ============================================================
+# TASK 1: Movie Genre Classification (NLP)
+# ============================================================
+
+nltk>=3.8.0
+regex>=2023.0.0
+
+# Optional (Advanced NLP – uncomment if used)
+# spacy>=3.7.0
+# transformers>=4.35.0
+
+
+# ============================================================
+# TASK 2: Credit Card Fraud Detection
+# ============================================================
+
+imbalanced-learn>=0.11.0
+xgboost>=1.7.0
+lightgbm>=4.0.0
+
+
+# ============================================================
+# TASK 3: Customer Churn Prediction
+# ============================================================
+
+category-encoders>=2.6.0
+
+
+# ============================================================
+# TASK 4: Spam SMS Detection
+# ============================================================
+
+wordcloud>=1.9.0
+
+
+# ============================================================
+# TASK 5: Handwritten Text Generation (Deep Learning)
+# ============================================================
+
+# Choose ONE framework only
+
+# ---- TensorFlow (Recommended) ----
+tensorflow>=2.14.0
+keras>=2.14.0
+
+# ---- PyTorch (Alternative – comment TensorFlow if used) ----
+# torch>=2.0.0
+# torchvision>=0.15.0
+# torchaudio>=2.0.0
+
+
+# ============================================================
+# MODEL SAVING & UTILITIES
+# ============================================================
+
+joblib>=1.3.0
+tqdm>=4.66.0
+pyyaml>=6.0
+
+
+# ============================================================
+# WEB APP / DEPLOYMENT (Optional)
+# ============================================================
+
+flask>=2.3.0
+flask-cors>=4.0.0
+# streamlit>=1.27.0
+# fastapi>=0.104.0
+# uvicorn>=0.23.0
+
+
+# ============================================================
+# ADVANCED VISUALIZATION (Optional)
+# ============================================================
+
+# plotly>=5.17.0
+# bokeh>=3.3.0
+
+
+# ============================================================
+# INSTALLATION NOTES
+# ============================================================
+
+# Create virtual environment:
+# python -m venv venv
+# source venv/bin/activate  (Linux/Mac)
+# venv\Scripts\activate     (Windows)
+
+# Install dependencies:
+# pip install -r requirements.txt
+
+
+# ============================================================
+# TASK-WISE PACKAGE SUMMARY
+# ============================================================
+
+# Task 1: numpy, pandas, sklearn, nltk, matplotlib
+# Task 2: sklearn, imbalanced-learn, xgboost, lightgbm
+# Task 3: sklearn, category-encoders
+# Task 4: nltk, wordcloud
+# Task 5: tensorflow / torch
+
+# ============================================================
+# END OF FILE
+# ============================================================

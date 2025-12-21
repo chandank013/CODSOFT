@@ -1,0 +1,13 @@
+codsoft_ml/
+.git
+.vscode/
+__pycache__/
+*.pyc
+.env
+data/
+artifacts/
+models/
+codsoft_01/
+codsoft_03/
+codsoft_04/
+codsoft_05/
