@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Genre Classifier | CodSoft</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Movie Genre Classification</h1>
+            <p class="subtitle">Predict movie genres using AI</p>
+            <p class="author">CodSoft ML Internship - Task 1 | Chandan Kumar</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>Enter Movie Description</h2>
+                <p class="instruction">Provide a brief plot summary or description of the movie:</p>
+                
+                <textarea 
+                    id="movieDescription" 
+                    placeholder="Example: A team of astronauts embarks on a dangerous mission to explore a distant planet and encounter alien life forms..."
+                    rows="6"
+                ></textarea>
+
+                <button id="predictBtn" onclick="predictGenre()">
+                    🔮 Predict Genre
+                </button>
+
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Analyzing...</p>
+                </div>
+
+                <div id="result" class="result" style="display: none;">
+                    <h3>Prediction Result</h3>
+                    <div class="result-content">
+                        <div class="metric">
+                            <span class="label">Predicted Genre:</span>
+                            <span class="value" id="genreValue">-</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Confidence:</span>
+                            <span class="value" id="confidenceValue">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card info-card">
+                <h3>📋 Available Genres</h3>
+                <div class="genres">
+                    <span class="genre-tag">Action</span>
+                    <span class="genre-tag">Comedy</span>
+                    <span class="genre-tag">Drama</span>
+                    <span class="genre-tag">Horror</span>
+                    <span class="genre-tag">Romance</span>
+                    <span class="genre-tag">Sci-Fi</span>
+                    <span class="genre-tag">Thriller</span>
+                    <span class="genre-tag">Adventure</span>
+                    <span class="genre-tag">Fantasy</span>
+                </div>
+            </div>
+
+            <div class="card examples-card">
+                <h3>💡 Try These Examples</h3>
+                <div class="examples">
+                    <div class="example" onclick="fillExample(0)">
+                        <strong>Sci-Fi Adventure:</strong>
+                        <p>"A team of astronauts embarks on a dangerous mission to explore a distant planet..."</p>
+                    </div>
+                    <div class="example" onclick="fillExample(1)">
+                        <strong>Romantic Drama:</strong>
+                        <p>"A young woman falls in love with a stranger she meets in Paris..."</p>
+                    </div>
+                    <div class="example" onclick="fillExample(2)">
+                        <strong>Mystery Thriller:</strong>
+                        <p>"A detective investigates a series of murders uncovering dark secrets..."</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Made with ❤️ by Chandan Kumar | CodSoft Internship December 2025</p>
+            <div class="social">
+                <a href="https://github.com/chandank013/CODSOFT" target="_blank">GitHub</a> |
+                <a href="https://linkedin.com/in/chandan013" target="_blank">LinkedIn</a>
+            </div>
+            <p class="hashtags">#codsoft #machinelearning #internship</p>
+        </footer>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

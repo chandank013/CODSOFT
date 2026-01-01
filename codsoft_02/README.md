@@ -365,9 +365,9 @@ print(f"Fraud Probability: {probability*100:.2f}%")
 
 | Model | Precision | Recall | F1-Score | ROC-AUC |
 |-------|-----------|--------|----------|---------|
-| Logistic Regression | 0.94 | 0.89 | 0.91 | 0.97 |
-| Decision Tree | 0.91 | 0.87 | 0.89 | 0.94 |
-| Random Forest | 0.96 | 0.92 | 0.94 | 0.98 |
+| Logistic Regression | 0.96 | 0.07 | 0.76 | 0.83 |
+| Decision Tree | 0.92 | 0.03 | 0.76 | 0.93 |
+| Random Forest | 0.97 | 0.08 | 0.68 | 0.90 |
 
 **Best Model:** Random Forest 🏆
 
@@ -713,7 +713,7 @@ Educational project - CodSoft Machine Learning Internship
 
 **Chandan Kumar**
 
-- 🔗 **LinkedIn:** [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)
+- 🔗 **LinkedIn:** [Your LinkedIn Profile](https://linkedin.com/in/chandan013)
 - 💻 **GitHub:** [chandank013](https://github.com/chandank013)
 - 📧 **Email:** your.email@example.com
 - 🌐 **Portfolio:** [Your Portfolio Website](https://yourportfolio.com)

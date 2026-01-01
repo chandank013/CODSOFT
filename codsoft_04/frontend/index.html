@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam SMS Detection | CodSoft</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>📱 Spam SMS Detection</h1>
+            <p class="subtitle">AI-Powered SMS Classification System</p>
+            <p class="author">CodSoft ML Internship - Task 4 | Chandan Kumar</p>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Message Input Section -->
+            <div class="card input-card">
+                <h2>💬 Message Analysis</h2>
+                <p class="instruction">Enter SMS message to check if it's spam or legitimate</p>
+
+                <div class="input-section">
+                    <label for="messageInput">
+                        <span class="label-icon">📝</span>
+                        SMS Message
+                    </label>
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Enter your SMS message here...
+
+Example: Congratulations! You've won $1000. Click here to claim now!"
+                        rows="6"
+                    ></textarea>
+                    <div id="charCount" class="char-count">0 characters</div>
+                </div>
+
+                <div class="button-group">
+                    <button id="predictBtn" class="primary-btn">
+                        🔮 Analyze Message
+                    </button>
+                    <button id="clearBtn" class="secondary-btn">
+                        🗑️ Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Analyzing message...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="results hidden">
+                <div class="card results-card">
+                    <h2>📊 Analysis Results</h2>
+                    
+                    <!-- Status Badge -->
+                    <div id="statusBadge" class="status-badge"></div>
+
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">🎯</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Prediction</span>
+                                <span class="metric-value" id="prediction">--</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">📈</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Confidence</span>
+                                <span class="metric-value" id="confidence">--</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">🚨</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Spam Probability</span>
+                                <span class="metric-value" id="spamProb">--</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">✅</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Ham Probability</span>
+                                <span class="metric-value" id="hamProb">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Probability Bar -->
+                    <div class="probability-section">
+                        <h3>Classification Analysis</h3>
+                        
+                        <!-- Spam Bar -->
+                        <div class="prob-bar-wrapper">
+                            <div class="prob-label-row">
+                                <span>🚨 Spam</span>
+                                <span id="spamPercent" class="prob-percent">0%</span>
+                            </div>
+                            <div class="probability-bar">
+                                <div id="spamBar" class="probability-fill spam"></div>
+                            </div>
+                        </div>
+
+                        <!-- Ham Bar -->
+                        <div class="prob-bar-wrapper">
+                            <div class="prob-label-row">
+                                <span>✅ Ham (Legitimate)</span>
+                                <span id="hamPercent" class="prob-percent">0%</span>
+                            </div>
+                            <div class="probability-bar">
+                                <div id="hamBar" class="probability-fill ham"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Message Details -->
+                    <div class="details-section">
+                        <h3>📋 Message Details</h3>
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Original Length:</span>
+                                <span class="detail-value" id="msgLength">--</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Processed Length:</span>
+                                <span class="detail-value" id="processedLength">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Messages -->
+            <div class="card samples-card">
+                <h3>💡 Try Sample Messages</h3>
+                <div class="samples-grid">
+                    <div class="sample-card spam-sample" onclick="loadSample(0)">
+                        <div class="sample-icon">🚨</div>
+                        <h4>Spam Example 1</h4>
+                        <p>"WINNER!! You won £1000. Call now!"</p>
+                        <span class="sample-detail">Typical spam pattern</span>
+                    </div>
+                    
+                    <div class="sample-card ham-sample" onclick="loadSample(1)">
+                        <div class="sample-icon">✅</div>
+                        <h4>Ham Example 1</h4>
+                        <p>"Hey! Meeting for lunch tomorrow?"</p>
+                        <span class="sample-detail">Normal conversation</span>
+                    </div>
+                    
+                    <div class="sample-card spam-sample" onclick="loadSample(2)">
+                        <div class="sample-icon">🚨</div>
+                        <h4>Spam Example 2</h4>
+                        <p>"FREE entry! Text FA to 87121"</p>
+                        <span class="sample-detail">Promotional spam</span>
+                    </div>
+
+                    <div class="sample-card ham-sample" onclick="loadSample(3)">
+                        <div class="sample-icon">✅</div>
+                        <h4>Ham Example 2</h4>
+                        <p>"Don't forget milk on way home"</p>
+                        <span class="sample-detail">Personal message</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Cards -->
+            <div class="info-section">
+                <div class="card info-card">
+                    <h3>📋 About Spam Detection</h3>
+                    <p>
+                        This system uses Natural Language Processing and Machine Learning to identify spam SMS messages.
+                        It analyzes message patterns, keywords, and linguistic features to provide accurate classifications.
+                    </p>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Real-time SMS analysis</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>NLP preprocessing pipeline</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>TF-IDF vectorization</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>High accuracy classification</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <h3>🎯 Classification Types</h3>
+                    <div class="risk-levels">
+                        <div class="risk-item spam-type">
+                            <span class="risk-label">🚨 SPAM</span>
+                            <span class="risk-range">Unwanted/promotional messages</span>
+                        </div>
+                        <div class="risk-item ham-type">
+                            <span class="risk-label">✅ HAM</span>
+                            <span class="risk-range">Legitimate messages</span>
+                        </div>
+                    </div>
+                    
+                    <div class="spam-indicators">
+                        <h4>Common Spam Indicators:</h4>
+                        <ul>
+                            <li>💰 Money-related keywords (win, prize, free)</li>
+                            <li>📞 Phone numbers and call-to-action</li>
+                            <li>🔗 Suspicious links or URLs</li>
+                            <li>⚠️ Urgent/pressure language</li>
+                            <li>🎁 Too-good-to-be-true offers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <h3>🔬 Model Information</h3>
+                    <div class="model-info">
+                        <div class="info-row">
+                            <span class="info-label">Algorithm:</span>
+                            <span class="info-value">Multinomial Naive Bayes</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Feature Extraction:</span>
+                            <span class="info-value">TF-IDF Vectorization</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Preprocessing:</span>
+                            <span class="info-value">Stemming, Stopword Removal</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Accuracy:</span>
+                            <span class="info-value">~97%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Made with ❤️ by Chandan Kumar | CodSoft ML Internship December 2025</p>
+            <div class="social-links">
+                <a href="https://github.com/chandank013/CODSOFT" target="_blank">GitHub</a> |
+                <a href="https://linkedin.com/in/chandan013" target="_blank">LinkedIn</a>
+            </div>
+            <p class="hashtags">#codsoft #spamdetection #machinelearning #nlp</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

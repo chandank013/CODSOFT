@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwritten Text Generation | CodSoft</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>✍️ Handwritten Text Generation</h1>
+            <p class="subtitle">AI-Powered Text Generation using Deep Learning</p>
+            <p class="author">CodSoft ML Internship - Task 5 | Chandan Kumar</p>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Input Section -->
+            <div class="card input-card">
+                <h2>🎨 Generate Text</h2>
+                <p class="instruction">Enter seed text and configure parameters to generate AI text</p>
+
+                <div class="input-grid">
+                    <!-- Seed Text -->
+                    <div class="input-group full-width">
+                        <label for="seedText">
+                            <span class="label-icon">📝</span>
+                            Seed Text
+                        </label>
+                        <textarea 
+                            id="seedText" 
+                            placeholder="Enter starting text (e.g., 'deep learning', 'the quick brown')"
+                            rows="3"
+                        >deep learning</textarea>
+                        <div class="input-hint">The model will continue from this text</div>
+                    </div>
+
+                    <!-- Model Selection -->
+                    <div class="input-group">
+                        <label for="modelType">
+                            <span class="label-icon">🤖</span>
+                            Model Type
+                        </label>
+                        <select id="modelType">
+                            <option value="lstm">LSTM (Recommended)</option>
+                            <option value="gru">GRU (Fast)</option>
+                            <option value="rnn">Simple RNN (Basic)</option>
+                        </select>
+                        <div class="input-hint">Different architectures for text generation</div>
+                    </div>
+
+                    <!-- Generation Length -->
+                    <div class="input-group">
+                        <label for="genLength">
+                            <span class="label-icon">📏</span>
+                            Generation Length
+                        </label>
+                        <input type="range" id="genLength" min="50" max="500" value="200" step="50">
+                        <div class="range-value" id="lengthValue">200 characters</div>
+                    </div>
+
+                    <!-- Temperature -->
+                    <div class="input-group">
+                        <label for="temperature">
+                            <span class="label-icon">🌡️</span>
+                            Temperature
+                        </label>
+                        <input type="range" id="temperature" min="0.2" max="1.5" value="0.8" step="0.1">
+                        <div class="range-value" id="tempValue">0.8 (Balanced)</div>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="primary-btn">
+                    ✍️ Generate Text
+                </button>
+            </div>
+
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Generating text with AI...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="results hidden">
+                <div class="card results-card">
+                    <h2>📄 Generated Text</h2>
+                    
+                    <!-- Metrics Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">🤖</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Model Used</span>
+                                <span class="metric-value" id="usedModel">--</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">📏</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Generated Length</span>
+                                <span class="metric-value" id="generatedLength">--</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">🌡️</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Temperature</span>
+                                <span class="metric-value" id="usedTemp">--</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-icon">📝</div>
+                            <div class="metric-content">
+                                <span class="metric-label">Total Length</span>
+                                <span class="metric-value" id="totalLength">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Generated Text Display -->
+                    <div class="text-display-section">
+                        <h3>📖 Generated Output</h3>
+                        <div class="text-output">
+                            <div class="seed-highlight">
+                                <span class="highlight-label">Seed:</span>
+                                <span id="displaySeed"></span>
+                            </div>
+                            <div class="generated-text" id="generatedText"></div>
+                        </div>
+                        <button id="copyBtn" class="secondary-btn">
+                            📋 Copy Text
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Seeds -->
+            <div class="card samples-card">
+                <h3>💡 Try Sample Seeds</h3>
+                <div class="samples-grid">
+                    <div class="sample-card" onclick="loadSeed('deep learning')">
+                        <div class="sample-icon">🤖</div>
+                        <h4>Deep Learning</h4>
+                        <p>"deep learning"</p>
+                        <span class="sample-detail">AI & ML topic</span>
+                    </div>
+                    
+                    <div class="sample-card" onclick="loadSeed('the quick brown')">
+                        <div class="sample-icon">🦊</div>
+                        <h4>Classic Phrase</h4>
+                        <p>"the quick brown"</p>
+                        <span class="sample-detail">Common text</span>
+                    </div>
+                    
+                    <div class="sample-card" onclick="loadSeed('neural networks')">
+                        <div class="sample-icon">🧠</div>
+                        <h4>Neural Networks</h4>
+                        <p>"neural networks"</p>
+                        <span class="sample-detail">Technical term</span>
+                    </div>
+
+                    <div class="sample-card" onclick="loadSeed('machine learning')">
+                        <div class="sample-icon">⚙️</div>
+                        <h4>Machine Learning</h4>
+                        <p>"machine learning"</p>
+                        <span class="sample-detail">Tech concept</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Cards -->
+            <div class="info-section">
+                <div class="card info-card">
+                    <h3>📋 About Text Generation</h3>
+                    <p>
+                        This system uses deep learning models (RNN, LSTM, GRU) to generate text character by character.
+                        The models learn patterns from training data and produce human-like text continuations.
+                    </p>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Character-level generation</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Three model architectures</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Adjustable creativity (temperature)</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✅</span>
+                            <span>Real-time generation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <h3>🤖 Model Information</h3>
+                    <div class="model-comparison">
+                        <div class="model-item">
+                            <div class="model-header">
+                                <span class="model-name">🔷 Simple RNN</span>
+                                <span class="model-badge basic">Basic</span>
+                            </div>
+                            <p>Simple recurrent network, good for basic patterns</p>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-header">
+                                <span class="model-name">🔶 LSTM</span>
+                                <span class="model-badge recommended">Recommended</span>
+                            </div>
+                            <p>Long Short-Term Memory, best for complex patterns</p>
+                        </div>
+                        <div class="model-item">
+                            <div class="model-header">
+                                <span class="model-name">🔹 GRU</span>
+                                <span class="model-badge fast">Fast</span>
+                            </div>
+                            <p>Gated Recurrent Unit, balance of speed and quality</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <h3>🌡️ Temperature Guide</h3>
+                    <div class="temp-guide">
+                        <div class="temp-item">
+                            <span class="temp-value">0.2 - 0.5</span>
+                            <span class="temp-desc">Conservative, repetitive, predictable</span>
+                        </div>
+                        <div class="temp-item">
+                            <span class="temp-value">0.6 - 0.9</span>
+                            <span class="temp-desc">Balanced, natural, recommended</span>
+                        </div>
+                        <div class="temp-item">
+                            <span class="temp-value">1.0 - 1.5</span>
+                            <span class="temp-desc">Creative, random, experimental</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Made with ❤️ by Chandan Kumar | CodSoft ML Internship December 2025</p>
+            <div class="social-links">
+                <a href="https://github.com/YourUsername/CODSOFT" target="_blank">GitHub</a> |
+                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+            </div>
+            <p class="hashtags">#codsoft #textgeneration #deeplearning #rnn #lstm #gru</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

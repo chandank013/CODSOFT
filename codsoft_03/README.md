@@ -350,9 +350,9 @@ import numpy as np
 import pandas as pd
 
 # Load model and preprocessors
-model = joblib.load('models/churn_prediction_model.pkl')
-scaler = joblib.load('artifacts/scaler.pkl')
-label_encoder = joblib.load('artifacts/label_encoder_gender.pkl')
+model = joblib.load('../models/churn_prediction_model.pkl')
+scaler = joblib.load('../artifacts/scaler.pkl')
+label_encoder = joblib.load('../artifacts/label_encoder_gender.pkl')
 
 # Prepare customer data
 customer = {
@@ -408,66 +408,88 @@ print(f"Risk Level: {risk}")
 ### Model Performance
 
 | Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
-|-------|----------|-----------|--------|----------|---------|
-| Logistic Regression (Baseline) | 79.5% | 0.65 | 0.52 | 0.58 | 0.78 |
-| Logistic Regression (Tuned) | 81.2% | 0.68 | 0.56 | 0.61 | 0.81 |
-| Random Forest (Baseline) | 85.8% | 0.76 | 0.68 | 0.72 | 0.87 |
-| Random Forest (Tuned) | 86.5% | 0.78 | 0.71 | 0.74 | 0.89 |
-| Gradient Boosting (Baseline) | 86.2% | 0.77 | 0.69 | 0.73 | 0.88 |
-| Gradient Boosting (Tuned) | 87.1% | 0.79 | 0.73 | 0.76 | 0.90 |
+|------|----------|-----------|--------|----------|---------|
+| Logistic Regression (Baseline) | 80.80% | 0.5891 | 0.1867 | 0.2836 | 0.7748 |
+| Logistic Regression (Tuned) | 71.85% | 0.3937 | 0.7101 | 0.5066 | 0.7781 |
+| Random Forest (Baseline) | 86.15% | 0.7708 | 0.4545 | 0.5719 | 0.8530 |
+| Random Forest (Tuned) | 83.75% | 0.5911 | 0.6536 | 0.6208 | 0.8612 |
+| Gradient Boosting (Baseline) | 87.00% | 0.7928 | 0.4889 | 0.6049 | 0.8708 |
+| Gradient Boosting (Tuned) | 86.90% | 0.7866 | 0.4889 | 0.6030 | 0.8650 |
 
-**Best Model:** Gradient Boosting (Tuned) 🏆  
-**Final Accuracy:** 87.1%  
-**Final F1-Score:** 0.76  
-**ROC-AUC:** 0.90
+**Best Model:** Random Forest (Tuned) 🏆  
+**Final Accuracy:** 83.7%  
+**Final F1-Score:** 0.62  
+**ROC-AUC:** 0.86
 
-### Detailed Performance
+### 📊 Detailed Performance
 
-**Confusion Matrix (Best Model):**
-- True Positives: ~1,460 (Churners correctly identified)
-- False Positives: ~340 (False alarms)
-- True Negatives: ~6,460 (Retained correctly identified)
-- False Negatives: ~540 (Missed churners)
+**Best Model:** Gradient Boosting (Tuned)
 
-**Key Metrics:**
-- **Detection Rate**: 73% of churners caught
-- **False Alarm Rate**: 5% of retained flagged
-- **Precision**: 79% of churn predictions are correct
-- **Recall**: 73% of actual churners are detected
+**Confusion Matrix (Approximate, based on metrics):**
+- **True Positives (TP):** ~980 (Churners correctly identified)
+- **False Positives (FP):** ~270 (False alarms)
+- **True Negatives (TN):** ~6,530 (Retained correctly identified)
+- **False Negatives (FN):** ~1,020 (Missed churners)
 
-### What This Means
+> *Values are indicative and derived from Precision = 0.7866 and Recall = 0.4889*
+
+---
+
+### 📈 Key Metrics
+- **Accuracy:** 86.90%
+- **Precision:** 78.66%
+- **Recall:** 48.89%
+- **F1-Score:** 0.6030
+- **ROC-AUC:** 0.8650
+
+---
+
+### 🔍 What This Means
 
 ✅ **For every 100 customers predicted to churn:**
-- 79 will actually churn (Precision)
-- 21 are false alarms (False Positives)
+- ~79 will actually churn (**Precision**)
+- ~21 are false alarms
 
 ✅ **For every 100 customers who actually churn:**
-- We identify 73 of them (Recall)
-- We miss 27 churners (False Negatives)
+- ~49 are correctly identified (**Recall**)
+- ~51 churners are missed
 
-### Key Findings
+➡️ The model is **highly precise**, producing reliable churn alerts,  
+but is **conservative**, prioritizing correctness over catching all churners.
+
+---
+
+### 🧠 Key Findings
 
 **Top Churn Indicators:**
-1. **Age** - Older customers (40-60) churn more
-2. **Geography** - Germany has highest churn rate (32%)
-3. **IsActiveMember** - Inactive users 2x more likely to churn
-4. **NumOfProducts** - Single-product users at highest risk
-5. **Balance** - Zero balance indicates disengagement
+1. **Age** – Customers aged 40–60 show higher churn probability
+2. **Geography** – Germany exhibits the highest churn rate
+3. **IsActiveMember** – Inactive users are significantly more likely to churn
+4. **NumOfProducts** – Single-product customers are at highest risk
+5. **Balance** – Zero or very low balance indicates disengagement
 
-**Churn Patterns:**
-- **Geography**: Germany (32%) > Spain (16%) > France (16%)
-- **Gender**: Female customers show slightly higher churn
-- **Age**: Peak churn in 40-60 age group
-- **Activity**: Inactive members 2x more likely to churn (35% vs 16%)
-- **Products**: 1 product = 30% churn, 2+ products = 10% churn
+---
 
-### Business Impact
+### 📉 Churn Patterns
+- **Geography:** Germany > Spain ≈ France
+- **Gender:** Female customers show slightly higher churn tendency
+- **Age:** Peak churn observed in the 40–60 age group
+- **Activity:** Inactive members are nearly **2× more likely** to churn
+- **Products:**
+  - 1 product → High churn risk
+  - 2+ products → Significantly lower churn
+
+---
+
+### 💼 Business Impact
 
 **With this system, you can:**
-- Identify 73% of potential churners before they leave
-- Reduce churn rate by 15-20% through targeted retention
-- Save $100-500 per customer in acquisition costs
-- Increase customer lifetime value by 25-30%
+- Reliably flag **high-confidence churners** with ~79% precision
+- Focus retention efforts where they matter most
+- Reduce churn through **targeted, cost-efficient campaigns**
+- Improve customer lifetime value by prioritizing **high-risk segments**
+- Support data-driven decisions using a model with strong **ROC-AUC (0.86)**
+
 
 ### Visualizations
 
@@ -980,7 +1002,7 @@ Educational project - CodSoft Machine Learning Internship
 
 **Chandan Kumar**
 
-- 🔗 **LinkedIn:** [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)
+- 🔗 **LinkedIn:** [Your LinkedIn Profile](https://linkedin.com/in/chandan013)
 - 💻 **GitHub:** [chandank013](https://github.com/chandank013)
 - 📧 **Email:** your.email@example.com
 - 🌐 **Portfolio:** [Your Portfolio Website](https://yourportfolio.com)
