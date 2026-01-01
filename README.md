@@ -49,7 +49,7 @@ This repository contains all five machine learning projects completed during my 
 
 | # | Project | Domain | Key Algorithms | Status |
 |---|---------|--------|----------------|--------|
-| 1 | Movie Genre Classification | NLP | Logistic Regression, Naive Bayes, SVM | ⏳ Pending |
+| 1 | Movie Genre Classification | NLP | Logistic Regression, Naive Bayes, SVM | ✅ Completed |
 | 2 | Credit Card Fraud Detection | Anomaly Detection | Logistic Regression, Random Forest, Decision Trees | ✅ Completed |
 | 3 | Customer Churn Prediction | Predictive Analytics | Random Forest, Gradient Boosting, Logistic Regression | ✅ Completed |
 | 4 | Spam SMS Detection | NLP | Naive Bayes, SVM, Logistic Regression | ✅ Completed |
