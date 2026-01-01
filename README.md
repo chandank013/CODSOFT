@@ -142,6 +142,8 @@ Build a model to detect fraudulent credit card transactions using imbalanced cla
 ### Problem Statement
 Given transaction details (amount, time, anonymized features), classify each transaction as fraudulent or legitimate, handling severe class imbalance.
 
+---
+
 ### Approach
 - **Data Preprocessing:** 
   - Handle missing values
@@ -157,6 +159,8 @@ Given transaction details (amount, time, anonymized features), classify each tra
   - Random Forest
 - **Evaluation:** Precision-Recall, ROC-AUC, Confusion Matrix, F1-Score
 
+---
+
 ### Key Results
 - **Best Model:** Random Forest (Tuned)
 - **ROC-AUC Score:** ~91%
@@ -164,13 +168,19 @@ Given transaction details (amount, time, anonymized features), classify each tra
 - **Recall:** High (catch fraudulent transactions)
 - **Challenge:** Handling 0.17% fraud cases in imbalanced data
 
+---
+
 ### Key Challenges
 - Highly imbalanced dataset (~0.17% fraud cases)
 - Balancing precision vs recall trade-off
 - Avoiding false positives for legitimate transactions
 
+---
+
 ### Technologies
 Python, scikit-learn, pandas, numpy, imbalanced-learn, matplotlib, seaborn
+
+---
 
 ### Project Structure
 ```
@@ -198,8 +208,12 @@ codsoft_02/
 ### Overview
 Predict customer churn for a subscription-based service to help businesses retain customers.
 
+---
+
 ### Problem Statement
 Using historical customer data (usage behavior, demographics, subscription info), predict which customers are likely to cancel their service.
+
+---
 
 ### Approach
 - **Data Preprocessing:**
@@ -218,11 +232,15 @@ Using historical customer data (usage behavior, demographics, subscription info)
   - Support Vector Machines
 - **Evaluation:** Accuracy, Precision, Recall, F1-Score, ROC-AUC
 
+---
+
 ### Key Results
 - **Best Model:** Random Forest (Tuned)
 - **Accuracy:** ~ 84%
 - **Churn Prediction Rate:** High accuracy
 - **Key Churn Indicators:** Tenure, Contract type, Monthly charges
+
+---
 
 ### Business Impact
 - Early identification of at-risk customers
@@ -230,8 +248,12 @@ Using historical customer data (usage behavior, demographics, subscription info)
 - Reduced customer acquisition costs
 - Improved customer lifetime value
 
+---
+
 ### Technologies
 Python, scikit-learn, pandas, numpy, XGBoost, matplotlib, seaborn, Flask
+
+---
 
 ### Project Structure
 ```
@@ -259,8 +281,12 @@ codsoft_03/
 ### Overview
 Build an AI model to classify SMS messages as spam or legitimate (ham) using NLP techniques.
 
+---
+
 ### Problem Statement
 Given an SMS message, classify it as spam or legitimate to help filter unwanted messages and protect users from phishing/scam attempts.
+
+---
 
 ### Approach
 - **Data Preprocessing:**
@@ -278,6 +304,8 @@ Given an SMS message, classify it as spam or legitimate to help filter unwanted 
   - Support Vector Machines (Linear SVM)
 - **Evaluation:** Accuracy, Precision, Recall, F1-Score, Confusion Matrix
 
+---
+
 ### Key Results
 - **Best Model:** 🏆 Multinomial Naive Bayes (Tuned)
 - **Accuracy:** **97.97%**
@@ -286,6 +314,8 @@ Given an SMS message, classify it as spam or legitimate to help filter unwanted 
 - **F1-Score:** **91.50%**
 - **Dataset:** SMS Spam Collection Dataset
 
+---
+
 
 ### Key Features
 - Real-time SMS classification
@@ -293,8 +323,12 @@ Given an SMS message, classify it as spam or legitimate to help filter unwanted 
 - High accuracy with low false positive rate
 - Web interface for testing
 
+---
+
 ### Technologies
 Python, scikit-learn, pandas, numpy, NLTK, TF-IDF, matplotlib, seaborn, Flask
+
+---
 
 ### Project Structure
 ```
@@ -322,8 +356,12 @@ codsoft_04/
 ### Overview
 Implement character-level deep learning models (RNN, LSTM, GRU) to generate handwritten-like text based on learned patterns.
 
+---
+
 ### Problem Statement
 Train a deep learning model on handwritten text samples to learn writing patterns and generate new, realistic handwritten-style text sequences.
+
+---
 
 ### Approach
 - **Data Preprocessing:**
@@ -347,6 +385,8 @@ Train a deep learning model on handwritten text samples to learn writing pattern
   - Character-by-character prediction
   - Adjustable temperature for creativity
 
+---
+
 ### Key Results
 - **Best Model:** GRU (single-layer, optimized configuration)
 - **Training Accuracy:** ~46%
@@ -354,12 +394,16 @@ Train a deep learning model on handwritten text samples to learn writing pattern
 - **Training Time:** ~112 minutes (early stopping applied)
 - **Generated Text Quality:** Grammatically coherent with improved contextual flow over Simple RNN and LSTM
 
+---
+
 ### Key Features
 - Character-level text generation using deep learning
 - Adjustable creativity via temperature sampling
 - Three recurrent architectures: Simple RNN, LSTM, and GRU
 - Interactive web interface for text generation
 - Near real-time sequence generation with trained models
+
+---
 
 ### Sample Outputs
 ```
@@ -372,8 +416,12 @@ Output: "the quick brown fox jumps over the lazy dog and runs through
 the forest with incredible speed..."
 ```
 
+---
+
 ### Technologies
 Python, TensorFlow/Keras, numpy, pandas, matplotlib, seaborn, Flask, Hugging Face Datasets
+
+---
 
 ### Project Structure
 ```
@@ -401,11 +449,15 @@ codsoft_05/
 ### Programming Languages
 - **Python 3.8+** - Primary language for all projects
 
+---
+
 ### Machine Learning Libraries
 - **scikit-learn** - Classical ML algorithms
 - **TensorFlow/Keras** - Deep learning (Task 5)
 - **XGBoost** - Gradient boosting (Tasks 2, 3)
 - **imbalanced-learn** - Handling imbalanced datasets (Task 2)
+
+---
 
 ### Data Processing
 - **pandas** - Data manipulation and analysis
@@ -413,13 +465,19 @@ codsoft_05/
 - **NLTK** - Natural language processing (Tasks 1, 4)
 - **Hugging Face Datasets** - Dataset loading (Task 5)
 
+---
+
 ### Visualization
 - **matplotlib** - Basic plotting
 - **seaborn** - Statistical visualizations
 
+---
+
 ### Web Development
 - **Flask** - Web application framework
 - **HTML/CSS/JavaScript** - Frontend development
+
+---
 
 ### Development Tools
 - **Jupyter Notebook** - Interactive development
@@ -436,11 +494,15 @@ codsoft_05/
 - Git
 - 4GB+ RAM (8GB recommended for Task 5)
 
+---
+
 ### Clone Repository
 ```bash
 git clone https://github.com/chandank013/CODSOFT.git
 cd CODSOFT
 ```
+
+---
 
 ### Setup for Each Task
 
@@ -454,20 +516,28 @@ cd codsoft_01  # or codsoft_02, codsoft_03, codsoft_04, codsoft_05
 pip install -r requirements.txt
 ```
 
+---
+
 **Common dependencies:**
 ```bash
 pip install numpy pandas scikit-learn matplotlib seaborn jupyter flask nltk
 ```
+
+---
 
 **For Task 5 (Deep Learning):**
 ```bash
 pip install tensorflow datasets
 ```
 
+---
+
 **For Task 2 (Imbalanced Data):**
 ```bash
 pip install imbalanced-learn xgboost
 ```
+
+---
 
 ### Running Projects
 
@@ -486,6 +556,8 @@ python app.py
 ```
 
 Then open browser: `http://localhost:5000`
+
+---
 
 ### Important Notes
 
